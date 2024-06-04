@@ -44,7 +44,7 @@ title: "关于"
 
 <script is:inline>
 Array.prototype.slice.call(document.querySelectorAll('.email'), 0).forEach(el => {
-    el.innerText = ['likun', '@', 'msn.cn'].join('');
+    el.innerText = ['likun.sg', '@', 'gmail.com'].join('');
 });
 
 Array.prototype.slice.call(document.querySelectorAll('.mobile'), 0).forEach(el => {
