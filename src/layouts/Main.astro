@@ -31,7 +31,7 @@ const { props } = Astro;
       <h1>{props.pageTitle}</h1>
     )
   }
-  <p>{props.pageDesc}</p>
+  <p class="pageDesc text-gray-400">{props.pageDesc}</p>
   <slot />
 </main>
 
@@ -44,5 +44,8 @@ const { props } = Astro;
   }
   #main-content p {
     @apply mb-6 mt-2 italic;
+  }
+  #main-content .pageDesc{
+    font-style: normal;
   }
 </style>

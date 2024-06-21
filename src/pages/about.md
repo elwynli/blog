@@ -3,28 +3,38 @@ layout: ../layouts/AboutLayout.astro
 title: "关于"
 ---
 
-> 锦地李花散，春风轻拂一时新。
 
-「锦李」是我的博客名，我是 Eric Li，偶在此写一些随笔。
+## 自我介绍
 
-中文里，锦的意思有：明亮美丽、纺入花纹的丝织品。我期望随笔似锦，美而有用。
+> The best way to predict the future is to invent it.
 
-我对软件助力商业感兴趣，而且我喜欢写作，随笔包括软件和商业有关主题。
+我是李昆，英文名 Eric Li。自小我除了爱看动画片，也爱看探索频道（Discovery Channel）。
 
-## 联系我
+我毕业于计算机软件专业，对计算机编程语言、操作系统和软件感兴趣。
 
-暂请采用以下方式：
+在职业生涯早期，做**软件研发**工作，随后从事**项目管理**近二十多年。
 
-* 给我发封邮件 <span class="email"></span> 
-* 或打个电话 <span class="mobile"></span><span class="text-gray-400">（如果未显示号码，请先使用邮件）</span>
+目前正在找工作，我希望从事软件研发或技术管理方面的工作。
+
+如果您有任何软件有关的问题，可以联系我；
+
+如果您有IT管理方面的需求，也请联系我，我为您提供相关咨询服务。
+
+
+## 联系方式
+
+可用以下方式联系我：
+
+* 邮件：<span class="email"></span>
+* 电话：<span class="mobile"></span><span class="text-gray-400">（如未显示号码，请先发邮件）</span>
 
 
 <script is:inline>
 Array.prototype.slice.call(document.querySelectorAll('.email'), 0).forEach(el => {
-    el.innerText = ['likun.sg', '@', 'gmail.com'].join('');
+    el.innerText = ['likun', 'msn.cn'].join('@');
 });
 
 Array.prototype.slice.call(document.querySelectorAll('.mobile'), 0).forEach(el => {
-    el.innerText = ['MTc3M', 'jI4MT', 'c3ODA='].join('');
+    el.innerText = ['MTM2O', 'DY4NT', 'I3NjA', '='].join('');
 });
 </script>
