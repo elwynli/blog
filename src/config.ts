@@ -25,10 +25,10 @@ export const LOGO_IMAGE = {
 
 export const SOCIALS: SocialObjects = [
   {
-        name: "Mail",
-        href: "mailto:likun@msn.cn",
-        linkTitle: `Send an email to ${SITE.title}`,
-        active: false,
+    name: "Mail",
+    href: "mailto:likun@msn.cn",
+    linkTitle: `Send an email to ${SITE.title}`,
+    active: false,
   },
   {
     name: "Github",

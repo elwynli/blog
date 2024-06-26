@@ -50,7 +50,7 @@ description:
     border: groove 1px #ccc;
     padding: 9px;
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 1025px) {
     .marginnote {
       position: initial;
       border:  groove 1px #ccc;
