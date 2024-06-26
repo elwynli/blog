@@ -63,7 +63,7 @@ description:
 
 然后在，写作内容时，用 `<span class="marginnote"></span>` 括住侧注的内容。
 
-```
+``` html
 <span class="marginnote">Stay Calm. 这里是侧注的内容。</span>
 ```
 
