@@ -33,7 +33,7 @@ description:
 
 实现方式，我采用了最简单的 CSS Calc 方式。
 
-只需要在在 PostDetails.astro 文件中 `</style>` 后，增加如下代码，即实现了大屏，和宽度小于 600 的小屏都能恰当显示侧注了。
+只需要在在 PostDetails.astro 文件中 `</style>` 后，增加如下代码，即实现了大屏，和宽度小于 1024 的小屏都能恰当显示侧注了。
 
 ``` html
 <style is:inline>
