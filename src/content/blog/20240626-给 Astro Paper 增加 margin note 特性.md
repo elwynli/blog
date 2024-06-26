@@ -1,8 +1,8 @@
 ---
 author: 李昆
 pubDatetime: 2024-06-26T12:40:00Z
-title: 给 Astro Paper 增加 margin node 特性
-slug: add-margin-node-feature-to-astro-paper-theme
+title: 给 Astro Paper 增加 margin note 特性
+slug: add-margin-note-feature-to-astro-paper-theme
 featured: false
 draft: false
 tags:
