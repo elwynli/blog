@@ -109,6 +109,29 @@ const layoutProps = {
   .post-title {
     @apply text-2xl font-semibold text-skin-accent;
   }
+
+</style>
+
+<style is:inline>
+  .marginnote {
+    font-size: 0.75rem;
+    width: 24rem;
+    right: calc((100% - 48rem) / 2 + 48rem);
+    margin: 0;
+    padding: 10px;
+    position: absolute;
+    text-align: right;
+  }
+  .marginnote:hover {
+    border: groove 1px #ccc;
+    padding: 9px;
+  }
+  @media screen and (max-width: 600px) {
+    .marginnote {
+      position: initial;
+      border:  groove 1px #ccc;
+    }
+  }
 </style>
 
 <script is:inline>
