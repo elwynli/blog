@@ -128,13 +128,17 @@ const socialImageURL = new URL(
 
     <script is:inline src="/toggle-theme.js"></script>
     <script is:inline>
-      const timeElements = document.querySelectorAll("time[dateTime]");
-      timeElements.forEach(function (timeElement) {
-        const utcTimeString = timeElement.getAttribute("dateTime");
-        const utcDate = new Date(utcTimeString);
-        const localTimeString = utcDate.toLocaleString();
-        timeElement.textContent = localTimeString;
-        timeElement.textContent = utcTimeString + ' (本地时间: ' + localTimeString + ')';
+      document.addEventListener("DOMContentLoaded", () => {
+        document
+          .querySelectorAll("time[datetime]")
+          .forEach(function (timeElement) {
+            const utcTimeString = timeElement.getAttribute("datetime");
+            const utcDate = new Date(utcTimeString);
+            const localTimeString = utcDate.toLocaleString();
+            timeElement.textContent = localTimeString;
+            timeElement.textContent =
+              utcTimeString + " (本地时间: " + localTimeString + ")";
+          });
       });
     </script>
     <style>
