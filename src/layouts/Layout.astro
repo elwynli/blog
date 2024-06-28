@@ -42,10 +42,24 @@ const socialImageURL = new URL(
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
 
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
@@ -113,14 +127,24 @@ const socialImageURL = new URL(
     <ViewTransitions />
 
     <script is:inline src="/toggle-theme.js"></script>
+    <script is:inline>
+      const timeElements = document.querySelectorAll("time[datetime]");
+      timeElements.forEach(function (timeElement) {
+        const utcTimeString = timeElement.getAttribute("datetime");
+        const utcDate = new Date(utcTimeString);
+        const localTimeString = utcDate.toLocaleString();
+        timeElement.textContent = localTimeString;
+        timeElement.textContent = utcTimeString + ' (本地时间: ' + localTimeString + ')';
+      });
+    </script>
     <style>
-    @font-face {
-        font-family: 'astro';
-        src: url('/assets/fonts/astro.ttf') format('truetype');
+      @font-face {
+        font-family: "astro";
+        src: url("/assets/fonts/astro.ttf") format("truetype");
         font-weight: normal;
         font-style: normal;
         font-display: swap;
-    }
+      }
     </style>
   </head>
   <body>
