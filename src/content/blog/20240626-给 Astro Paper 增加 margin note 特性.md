@@ -12,6 +12,10 @@ description:
   在最新博客技术中，侧注 Margin Note 被很多明星博主实现，我在此提供 Astro 实现的方法。
 ---
 
+## 内容目录
+
+* [Margin Note](#margin-note)
+* [实现方式](#实现方式)
 
 ## Margin Note
 

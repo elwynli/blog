@@ -19,9 +19,7 @@ title: "关于"
 如果您有IT管理和软件项目方面的需求，也请联系我，我为您提供项目研发和相关咨询服务。
 
 
-## 联系方式
-
-可用以下方式联系我：
+## 保持联系
 
 * 邮件：<span class="email"></span>
 * 电话：<span class="mobile"></span><span class="text-gray-400">（如未显示号码，请先发邮件）</span>

@@ -14,7 +14,7 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     react(),
-    sitemap(),
+    sitemap()
   ],
   markdown: {
     remarkPlugins: [
@@ -22,7 +22,7 @@ export default defineConfig({
       [
         remarkCollapse,
         {
-          test: "Table of contents",
+          test: "目录",
         },
       ],
     ],
