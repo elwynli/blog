@@ -137,7 +137,17 @@ const socialImageURL = new URL(
             const localTimeString = utcDate.toLocaleString();
             timeElement.textContent = localTimeString;
             timeElement.textContent =
-              utcTimeString + " (本地时间: " + localTimeString + ")";
+              localTimeString + " (UTC: " + utcTimeString + ")";
+
+            let nextSibling = timeElement.nextElementSibling;
+            for (let i = 0; i < 3 && nextSibling; i++) {
+              if (nextSibling.tagName.toLowerCase() === "span") {
+                nextSibling.parentNode.removeChild(nextSibling);
+                nextSibling = timeElement.nextElementSibling;
+              } else {
+                break;
+              }
+            }
           });
       });
     </script>
