@@ -18,6 +18,26 @@ title: "关于"
 
 如果您有IT管理和软件项目方面的需求，也请联系我，我为您提供项目研发和相关咨询服务。
 
+## 与我有关
+
+中国唐代画家以寥寥数笔描绘一个人物，词语也是一种画笔：
+
+* 长期主义
+* 共赢
+* <span id="_a">有用</span> | <span id="_b" class="text-gray-400">有趣</span>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelector("#_a").addEventListener("mouseover", () => {
+            document.querySelector("#_a").classList.add("text-gray-400");
+            document.querySelector("#_b").classList.remove("text-gray-400");
+        });
+        document.querySelector("#_b").addEventListener("mouseover", () => {
+            document.querySelector("#_b").classList.add("text-gray-400");
+            document.querySelector("#_a").classList.remove("text-gray-400");
+        });
+    });
+</script>
 
 ## 保持联系
 
