@@ -150,17 +150,20 @@ const socialImageURL = new URL(
               }
             }
           });
-
-        const links = document.getElementsByTagName('a');
-        for (let i = 0; i < links.length; i++) {
-          const match = links[i].hash.match(/#(.*)-fnref-\d+$/);
-          if (match) {
-            links[i].onclick = function (event) {
-              const target = event.srcElement || event.target;
-              timerAnchor = setInterval(checkAnchorInViewport, 100, target.hash);
-            };
+        
+        document.addEventListener('click', function(e) {
+          const links = document.getElementById('article').getElementsByTagName('a');
+          for (let i = 0; i < links.length; i++) {
+            const match = links[i].hash.match(/#(.*)-fnref-\d+$/);
+            if (match) {
+              links[i].onclick = function (event) {
+                const target = event.srcElement || event.target;
+                timerAnchor = setInterval(checkAnchorInViewport, 100, target.hash);
+              };
+            }
           }
-        }
+        });
+        
         function checkAnchorInViewport(hash) {
           const el = document.getElementById(hash.slice(1, hash.length));
           if (isElInViewport(el)) {
