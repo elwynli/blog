@@ -183,7 +183,26 @@ const socialImageURL = new URL(
             rect.right <= (window.innerWidth || document.documentElement.clientWidth)
           );
         }
+
+        document.addEventListener('mouseover', function(event) {
+          if (event.target.matches('span.marginnote-ref')) {
+            const labelId = event.target.id;
+            const labelElement = document.querySelector(`label[for="${labelId}"]`);
+            labelElement.classList.add('marginnote-hovered');
+          }
+        });
+
+        document.addEventListener('mouseout', function(event) {
+          if (event.target.matches('span.marginnote-ref')) {
+            const labelId = event.target.id;
+            const labelElement = document.querySelector(`label[for="${labelId}"]`);
+            setTimeout(function() {
+              labelElement.classList.remove('marginnote-hovered');
+            }, 300);
+          }
+        });
       });
+
     </script>
     <style>
       @font-face {

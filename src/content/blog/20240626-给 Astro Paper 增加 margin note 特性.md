@@ -16,12 +16,13 @@ description:
 
 * [Margin Note](#margin-note)
 * [实现方式](#实现方式)
+* [增加高亮](#增加高亮)
 
 ## Margin Note
 
-<span class="marginnote">比如脂砚斋批注的《红楼梦》；李渔批注《三国志》。</span>
+<label class="marginnote" for="mn1">比如脂砚斋批注的《红楼梦》；李渔批注《三国志》。</label>
 
-侧注，Margin Note。小时候看到很多名人，都习惯在书籍侧面的留白处用钢笔写上阅读心得和感悟，其实还有许多家喻户晓更早的点评。
+侧注，Margin Note。小时候看到很多名人，都习惯在<span id="mn1" class="marginnote-ref">书籍</span>侧面的留白处用钢笔写上阅读心得和感悟，其实还有许多家喻户晓更早的点评。
 
 当电子屏阅读逐渐取代纸质阅读的时代，同样的模式，被很多知名博客带到了电子阅读上。即实现，在正文某段落的侧面，增加一些额外的文本内容，这些内容可能是博主的额外说明，也可能是对正文内容的二次补充。
 
@@ -63,12 +64,53 @@ description:
 </style>
 ```
 
-<span class="marginnote">Stay Calm. 这里是侧注的内容。</span>
+<label class="marginnote" for="mn2">Stay Calm. 这里是侧注的内容。</label>
 
-然后在，写作内容时，用 `<span class="marginnote"></span>` 括住侧注的内容。
+然后在，写作内容时，用 `<label class="marginnote"></label>` 括住<span id="mn2" class="marginnote-ref">侧注</span>的内容。
 
 ``` html
-<span class="marginnote">Stay Calm. 这里是侧注的内容。</span>
+<label class="marginnote">Stay Calm. 这里是侧注的内容。</label>
 ```
 
+## 增加高亮
+
+前文中，还用带有 `marginnote-ref` 类名的 span 扩住了被侧注的内容比如：
+
+``` html
+<span id="mn1" class="marginnote-ref">习惯在书籍侧面的留白处用钢笔写上阅读心得和感悟</span>
+```
+
+于是增强了被侧注文字的样式。
+
+``` html
+<style is:inline>
+  .marginnote {
+    font-size: 0.75rem;
+    width: 24rem;
+    right: calc((100% - 48rem) / 2 + 48rem);
+    margin: 0;
+    padding: 10px;
+    position: absolute;
+    text-align: right;
+  }
+  .marginnote:hover, .marginnote-hovered {
+    border: dashed 1px rgba(var(--color-accent), var(--tw-text-opacity));
+    padding: 9px;
+  }
+  .marginnote-ref {
+    text-decoration: underline wavy rgba(var(--color-accent), var(--tw-text-opacity));
+    text-underline-offset: 5px;
+  }
+  @media screen and (max-width: 1025px) {
+    .marginnote {
+      position: initial;
+      border:  dashed 1px rgba(var(--color-accent), var(--tw-text-opacity));
+    }
+  }
+</style>
+```
+
+
 如果你的 TOC 在左边，你希望将侧注放在右侧，而你又不太懂怎么实现，可以邮件联系我，或者了解 CSS Calc 后自行修改 `right:` 那行。
+
+

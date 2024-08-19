@@ -122,14 +122,18 @@ const layoutProps = {
     position: absolute;
     text-align: right;
   }
-  .marginnote:hover {
-    border: groove 1px #ccc;
+  .marginnote:hover, .marginnote-hovered {
+    border: dashed 1px rgba(var(--color-accent), var(--tw-text-opacity));
     padding: 9px;
+  }
+  .marginnote-ref {
+    text-decoration: underline wavy rgba(var(--color-accent), var(--tw-text-opacity));
+    text-underline-offset: 5px;
   }
   @media screen and (max-width: 1025px) {
     .marginnote {
       position: initial;
-      border:  groove 1px #ccc;
+      border:  dashed 1px rgba(var(--color-accent), var(--tw-text-opacity));
     }
   }
 </style>
@@ -241,4 +245,5 @@ const layoutProps = {
     });
   }
   backToTop();
+
 </script>
