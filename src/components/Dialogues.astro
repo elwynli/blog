@@ -1,6 +1,13 @@
 ---
+export interface Dialogue {
+  text: string;
+  speaker: string;
+  avatar: string;
+  alignment: 'left' | 'right';
+};
+
 const props = Astro.props;
-const dialogues = props.dialogues;
+const dialogues = props.dialogues as Dialogue[];
 ---
 <style>
   .dialogues-container {
@@ -42,7 +49,7 @@ const dialogues = props.dialogues;
   }
 </style>
 <div class="dialogues-container">
-  {dialogues.map((dialogue, index) => (
+  {dialogues.map((dialogue) => (
     <div class={`dialogue ${dialogue.alignment}`}>
       {dialogue.alignment === 'left'? (
         <>
