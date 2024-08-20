@@ -1,0 +1,80 @@
+---
+author: 李昆
+pubDatetime: 2024-08-19T15:00:00Z
+title: 给 Astro 增加对话功能
+slug: added-dialogues-for-astro
+featured: false
+draft: false
+tags:
+  - Astro
+description:
+  本文描述的是关于给 Astro 增加对话功能，即源自 Daniel 的帖子描述和 Xe Iaso 的素材。
+---
+import Dialogues from 'Dialogues.astro';
+
+## 内容目录
+
+* [对话](#对话)
+* [对话例子](#对话例子)
+* [实现方式](#实现方式)
+
+## 对话
+
+在文章内容中，插入一段多角色的对话，可以给博客帖子的形式带来变化，人物对话会让概念变得生动。
+
+## 对话例子
+
+<Dialogues dialogues={[
+  { speaker: "拿铁", text: "Hi，你没事吧！", avatar: "/assets/characters/avatar1.png", alignment: 'left'  },
+  { speaker: "美式", text: "Ye，我美式啊！", avatar: "/assets/characters/avatar2.webp", alignment: 'right' },
+  { speaker: "咖啡玛奇朵", text: "Oh，趁热拿铁吧！", avatar: "/assets/characters/avatar3.png", alignment: 'left' },
+  { speaker: "爱尔兰咖啡", text: "Ha，鸣谢 Xe Iaso 角色客串！", avatar: "/assets/characters/avatar.png", alignment: 'right' },
+]} />
+
+## 实现方式
+
+实现一个 Astro 对话组件
+
+``` html
+---
+const props = Astro.props;
+const dialogues = props.dialogues;
+---
+<div class="dialogues-container">
+  {dialogues.map((dialogue, index) => (
+    <div class={`dialogue ${dialogue.alignment}`}>
+      {dialogue.alignment === 'left'? (
+        <>
+          <div class="avatar-container">
+            <img src={dialogue.avatar} alt={dialogue.speaker} />
+          </div>
+          <div class="text-container">
+            <p is:raw>{dialogue.text}</p>
+          </div>
+        </>
+      ) : (
+        <>
+          <div class="text-container">
+            <p is:raw>{dialogue.text}</p>
+          </div>
+          <div class="avatar-container">
+            <img src={dialogue.avatar} alt={dialogue.speaker} />
+          </div>
+        </>
+      )}
+    </div>
+  ))}
+</div>
+```
+
+
+安装 mdx 扩展后，则可以在页面使用该组件。
+``` html
+<Dialogues dialogues={[
+  { speaker: "拿铁", text: "Hi，你没事吧！", avatar: "/assets/characters/avatar1.png", alignment: 'left'  },
+  { speaker: "美式", text: "Ye，我美式啊！", avatar: "/assets/characters/avatar2.webp", alignment: 'right' },
+  { speaker: "咖啡玛奇朵", text: "Oh，趁热拿铁吧！", avatar: "/assets/characters/avatar3.png", alignment: 'left' },
+  { speaker: "爱尔兰咖啡", text: "Ha，鸣谢 Xe Iaso 角色客串！", avatar: "/assets/characters/avatar.png", alignment: 'right' },
+]} />
+```
+

@@ -151,13 +151,13 @@ const socialImageURL = new URL(
             }
           });
         
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function() {
           const links = document.getElementById('article').getElementsByTagName('a');
           for (let i = 0; i < links.length; i++) {
             const match = links[i].hash.match(/#(.*)-fnref-\d+$/);
             if (match) {
               links[i].onclick = function (event) {
-                const target = event.srcElement || event.target;
+                const target = event.target;
                 timerAnchor = setInterval(checkAnchorInViewport, 100, target.hash);
               };
             }
