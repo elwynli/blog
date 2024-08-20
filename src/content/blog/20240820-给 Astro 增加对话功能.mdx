@@ -1,6 +1,7 @@
 ---
 author: 李昆
 pubDatetime: 2024-08-19T15:00:00Z
+modDatetime: 2024-08-20T12:30:00Z
 title: 给 Astro 增加对话功能
 slug: added-dialogues-for-astro
 featured: false
@@ -18,22 +19,27 @@ import Dialogues from '@components/Dialogues.astro';
 * [对话例子](#对话例子)
 * [实现方式](#实现方式)
 
-## 对话
-
-在文章内容中，插入一段多角色的对话，可以给博客帖子的形式带来变化，人物对话会让概念变得生动。
-
-## 对话例子
+## 对话是什么
 
 <Dialogues dialogues={[
-  { speaker: "拿铁", text: "Hi，你没事吧！", avatar: "/assets/characters/avatar1.png", alignment: 'left'  },
-  { speaker: "美式", text: "Ye，我美式啊！", avatar: "/assets/characters/avatar2.webp", alignment: 'right' },
-  { speaker: "咖啡玛奇朵", text: "Oh，趁热拿铁吧！", avatar: "/assets/characters/avatar3.png", alignment: 'left' },
-  { speaker: "爱尔兰咖啡", text: "Ha，鸣谢 Xe Iaso 角色客串！", avatar: "/assets/characters/avatar.png", alignment: 'right' },
+  { speaker: "拿铁", text: "在小说阅读中，我们经常见到人物之间的“对话”。", avatar: "/assets/characters/avatar1.png", alignment: 'left' },
+  { speaker: "美式", text: "是的，在博客中，转述不同人的贴文，也可以使用“对话”", avatar: "/assets/characters/avatar2.webp", alignment: 'right' },
+  { speaker: "咖啡玛奇朵", text: "所以说，对话就是不同角色的谈话。", avatar: "/assets/characters/avatar3.png", alignment: 'left' },
+  { speaker: "爱尔兰咖啡", text: "嗯，“对话”就是常说的对话。", avatar: "/assets/characters/avatar.png", alignment: 'right' },
+]} />
+
+## 对话用在哪
+
+<Dialogues dialogues={[
+  { speaker: "拿铁", text: "对话可以用在不止一个人说话的地方。", avatar: "/assets/characters/avatar1.png", alignment: 'left'  },
+  { speaker: "美式", text: "最直接就是用在博客内容中。", avatar: "/assets/characters/avatar2.webp", alignment: 'right' },
+  { speaker: "咖啡玛奇朵", text: "能具体一些吗？", avatar: "/assets/characters/avatar3.png", alignment: 'left' },
+  { speaker: "爱尔兰咖啡", text: "就像现在。", avatar: "/assets/characters/avatar.png", alignment: 'right' },
 ]} />
 
 ## 实现方式
 
-实现一个 Astro 对话组件
+实现一个 Astro 对话组件即可，详细的代码可以在我的 [GitHub](https://github.com/ericlikun/blog) 中拿到，欢迎关注我，给我 Star。
 
 ``` html
 ---
@@ -78,3 +84,12 @@ const dialogues = props.dialogues;
 ]} />
 ```
 
+效果如下：
+
+
+<Dialogues dialogues={[
+  { speaker: "拿铁", text: "Hi，你没事吧！", avatar: "/assets/characters/avatar1.png", alignment: 'left'  },
+  { speaker: "美式", text: "Ye，我美式啊！", avatar: "/assets/characters/avatar2.webp", alignment: 'right' },
+  { speaker: "咖啡玛奇朵", text: "Oh，趁热拿铁吧！", avatar: "/assets/characters/avatar3.png", alignment: 'left' },
+  { speaker: "爱尔兰咖啡", text: "Ha，鸣谢 Xe Iaso 角色客串！", avatar: "/assets/characters/avatar.png", alignment: 'right' },
+]} />

@@ -23,29 +23,29 @@ const dialogues = props.dialogues as Dialogue[];
     display: flex;
     align-items: center;
   }
-
-  .left .avatar-container img {
-    margin-right: 1rem;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-  }
-  .left.text-container {
-    flex: 1;
-  }
   .right {
     display: flex;
     justify-content: flex-end;
     align-items: center;
   }
-  .right .avatar-container img {
-    margin-left: 1rem;
+  .avatar-container img {
     border-radius: 50%;
     width: 50px;
     height: 50px;
   }
-  .right.text-container {
-    flex: 1;
+  .left .avatar-container img {
+    margin-right: 1rem;
+  }
+  .right .avatar-container img {
+    margin-left: 1rem;
+  }
+  .text-container {
+    background-color: rgba(200, 200, 200, 0.3);
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+  }
+  .text-container p {
+    margin: 0.3rem;
   }
 </style>
 <div class="dialogues-container">
