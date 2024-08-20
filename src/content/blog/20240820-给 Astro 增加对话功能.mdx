@@ -39,9 +39,11 @@ import Dialogues from '@components/Dialogues.astro';
 
 ## 实现方式
 
-实现一个 Astro 对话组件即可，详细的代码可以在我的 [GitHub](https://github.com/ericlikun/blog) 中拿到，欢迎关注我，给我 Star。
+实现一个 Astro 对话组件即可。
 
-``` html
+以下源码在 [GitHub](https://github.com/ericlikun/blog) 下载，欢迎关注和 Star。
+
+``` html 
 ---
 const props = Astro.props;
 const dialogues = props.dialogues;
@@ -85,7 +87,6 @@ const dialogues = props.dialogues;
 ```
 
 效果如下：
-
 
 <Dialogues dialogues={[
   { speaker: "拿铁", text: "Hi，你没事吧！", avatar: "/assets/characters/avatar1.png", alignment: 'left'  },
