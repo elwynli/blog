@@ -7,7 +7,6 @@ slug: add-margin-note-feature-to-astro-paper-theme
 featured: false
 draft: false
 tags:
-  - Margin Note
   - Astro
 description:
   在最新博客技术中，侧注 Margin Note 被很多明星博主实现，我在此提供 Astro 实现的方法。
