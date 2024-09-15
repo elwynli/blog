@@ -1,0 +1,76 @@
+---
+const initialSrc = "about:blank";
+---
+
+<div class="article-viewer">
+  <iframe id="articleFrame" src={initialSrc} title="文章内容" width="100%" height="100%"></iframe>
+</div>
+
+<style>
+  .article-viewer {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+  }
+  iframe {
+    border: none;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script is:inline>
+  const articleFrame = document.getElementById('articleFrame');
+
+  document.addEventListener('updateArticleContent', (event) => {
+    console.log('Received updateArticleContent event');
+    const url = event.detail;
+    updateArticleViewer(url);
+  });
+
+  function updateArticleViewer(url) {
+    console.log('Updating article viewer with URL:', url);
+    if (articleFrame instanceof HTMLIFrameElement) {
+      articleFrame.src = url;
+    } else {
+      console.error('articleFrame not found or not an iframe');
+    }
+  }
+
+  // 监听来自 iframe 的消息
+  window.addEventListener('message', (event) => {
+    if (event.data.type === 'backgroundColor') {
+      console.log('Received background color from iframe:', event.data.color);
+      const bgColor = event.data.color;
+      // 发送自定义事件，通知其他组件更新背景颜色
+      const updateEvent = new CustomEvent('updateBackgroundColor', { detail: bgColor });
+      document.dispatchEvent(updateEvent);
+    }
+  });
+
+  // 在 iframe 加载完成后注入脚本
+  articleFrame?.addEventListener('load', () => {
+    try {
+      const script = document.createElement('script');
+      script.textContent = `
+        function detectBackgroundColor() {
+          const bgColor = getComputedStyle(document.body).backgroundColor;
+          window.parent.postMessage({ type: 'backgroundColor', color: bgColor }, '*');
+        }
+        detectBackgroundColor();
+        const observer = new MutationObserver(detectBackgroundColor);
+        observer.observe(document.body, { attributes: true, attributeFilter: ['style'] });
+      `;
+      articleFrame.contentDocument?.body.appendChild(script);
+    } catch (error) {
+      console.error('Error injecting script into iframe:', error);
+    }
+  });
+</script>

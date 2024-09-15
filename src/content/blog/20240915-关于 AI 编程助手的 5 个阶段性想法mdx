@@ -1,0 +1,57 @@
+---
+author: 李昆
+pubDatetime: 2024-09-15T07:59:00Z
+title: 关于 AI 编程助手的 5 个阶段性想法
+slug: 5-ideas-for-ai-code-assistants
+featured: true
+draft: false
+tags:
+  - Astro
+  - Cursor AI
+description:
+  在使用 Cursor AI 实现了 Fellow 后，关于 AI 编程助手我有一些阶段性想法。
+---
+import Dialogues from '@components/Dialogues.astro';
+
+## 内容目录
+
+* [阶段性想法](#阶段性想法)
+* [使用 Cursor 实现 Fellow](#使用-cursor-实现-fellow)
+
+
+## 阶段性想法
+
+<Dialogues dialogues={[
+  { speaker: "Case", text: "AI 编程助手可以提高编程效率吗？", avatar: "/assets/characters/avatar1.png", alignment: 'left'  },
+  { speaker: "Molly", text: "当然会。你可以用它来生成代码，重构，修正错误……", avatar: "/assets/characters/avatar2.webp", alignment: 'right' },
+  { speaker: "Case", text: "AI 编程助手未来会取代程序员？", avatar: "/assets/characters/avatar1.png", alignment: 'left'  },
+  { speaker: "Molly", text: "在很长的时间内不会。就算算力继续倍增，大语言模型方向实现通用 AI 也不可思议，如果真实现了，那么宇宙可能就是最大的草台班子。", avatar: "/assets/characters/avatar2.webp", alignment: 'right' },
+  { speaker: "Case", text: "Cursor 是 2024 最好用的 AI 编程工具吗？", avatar: "/assets/characters/avatar1.png", alignment: 'left'  },
+  { speaker: "Molly", text: "从体验上是。", avatar: "/assets/characters/avatar2.webp", alignment: 'right' },
+  { speaker: "Case", text: "这是怎么发生的？", avatar: "/assets/characters/avatar1.png", alignment: 'left'  },
+  { speaker: "Molly", text: "Cursor 有更多的上下文记忆，和同时在多个文件内编程的能力。", avatar: "/assets/characters/avatar2.webp", alignment: 'right' },
+  { speaker: "Case", text: "不用 AI 编程助手，有什么优势吗？", avatar: "/assets/characters/avatar1.png", alignment: 'left'  },
+  { speaker: "Molly", text: "在局部和限制条件下可能有，比如编码规模较小的代码优化场景，或者以学习为目的。", avatar: "/assets/characters/avatar2.webp", alignment: 'right' },
+]} />
+
+## 使用 Cursor 实现 Fellow
+
+Cursor 的营销很精彩，我下载了它，为体验 Cursor，我在近期热门主题*内容订阅*上拟定了一个编程目标。
+
+Fellow = feed + follow
+
+通过 Cursor 实现的 [Fellow](https://likun.cc/fellow)，特性有：
+
+* Feed 自定义列表
+* 通过 Feed 解析文章列表
+* 展示 文章
+
+在实现这个 MVP 的过程中，我进行了 10 论对话， Cursor 同时操作写入了 4 个文件，其中一个主文件和 3 个 Astro 组件。
+
+我其实很难理解 AI 是如何学会编程的，但软件的难度，有时是来自于逻辑本身的复杂，有时候用文本描述逻辑，不如直接使用代码来表达。
+
+你告诉 AI 你要什么，AI 往往能实现一个 60~70 分的实现，但产品的核心往往不在其中，往往 AI 难以真的实现商业中最关键的部分。
+
+
+
+

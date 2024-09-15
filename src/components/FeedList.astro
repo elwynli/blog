@@ -1,0 +1,312 @@
+---
+import { parse } from 'toml';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const tomlFile = readFileSync(path.join(__dirname, '../data/feeds.toml'), 'utf-8');
+const feedsData = parse(tomlFile);
+const defaultFeeds = feedsData.feed;
+
+interface Feed {
+  name: string;
+  url: string;
+}
+
+interface Article {
+  title: string;
+  link: string;
+  date: string;
+}
+---
+
+<div class="feed-list" id="feedList">
+    <svg width="16px" height="16px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <circle cx="20" cy="80" r="14" style="fill:#FF7000" />
+        <g style="fill:none;stroke:#FF7000;stroke-opacity:0.8">
+          <path style="stroke-width:9" d="M 58,95 C 58,59 38,44 4,44"/>
+          <path style="stroke-width:9" d="M 84,95 C 84,52 64,17 5,17"/>
+        </g>
+      </svg> Fellow
+  <button id="editFeedsBtn">+</button>
+  <ul id="feedListContent">
+    <!-- 内容将由 JavaScript 动态填充 -->
+  </ul>
+  <div class="resizer" id="feedListResizer"></div>
+</div>
+
+<div id="editFeedsModal" class="modal">
+  <div class="modal-content">
+    <textarea id="feedsTextarea" rows="10" cols="50"></textarea>
+    <div class="modal-buttons">
+      <button id="saveFeedsBtn">确定</button>
+      <button id="cancelEditBtn">取消</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .feed-list {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    width: 16rem;
+    min-width: 16rem;
+    max-width: 30rem;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    position: relative;
+  }
+  h2 {
+    margin-top: 0;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    margin-bottom: 0.5rem;
+  }
+  .feed-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  .feed-link:hover {
+    text-decoration: underline;
+  }
+  .resizer {
+    width: 5px;
+    height: 100%;
+    background: #ccc;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: ew-resize;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+  }
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+  }
+  .modal-buttons {
+    margin-top: 10px;
+    text-align: right;
+  }
+  #editFeedsBtn {
+    margin-bottom: 1rem;
+  }
+</style>
+
+<script define:vars={{ defaultFeeds }}>
+  const feedList = document.getElementById('feedList');
+  const feedListContent = document.getElementById('feedListContent');
+  const resizer = document.getElementById('feedListResizer');
+  const editFeedsBtn = document.getElementById('editFeedsBtn');
+  const editFeedsModal = document.getElementById('editFeedsModal');
+  const feedsTextarea = document.getElementById('feedsTextarea');
+  const saveFeedsBtn = document.getElementById('saveFeedsBtn');
+  const cancelEditBtn = document.getElementById('cancelEditBtn');
+  let isResizing = false;
+
+  // 从 IndexedDB 或 TOML 获取 feeds
+  async function getFeeds() {
+    if ('indexedDB' in window) {
+      try {
+        const db = await openDatabase();
+        const feeds = await new Promise((resolve, reject) => {
+          const transaction = db.transaction(['feeds'], 'readonly');
+          const store = transaction.objectStore('feeds');
+          const request = store.getAll();
+          request.onerror = () => reject(request.error);
+          request.onsuccess = () => resolve(request.result);
+        });
+
+        if (feeds && feeds.length > 0) {
+          return feeds;
+        }
+      } catch (error) {
+        console.error('Error getting feeds from IndexedDB:', error);
+      }
+    }
+    
+    // 如果 IndexedDB 为空或出错，保存 defaultFeeds 并返回
+    await saveFeeds(defaultFeeds);
+    return defaultFeeds;
+  }
+
+  // 打开 IndexedDB 数据库
+  function openDatabase() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open('FeedReaderDB', 1);
+
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve(request.result);
+
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        db.createObjectStore('feeds', { keyPath: 'url' });
+      };
+    });
+  }
+
+  // 保存 feeds 到 IndexedDB
+  async function saveFeeds(feeds) {
+    const db = await openDatabase();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(['feeds'], 'readwrite');
+      const store = transaction.objectStore('feeds');
+      feeds.forEach(feed => {
+        if (!feed.url) {
+          console.error('Feed missing URL:', feed);
+          return; // 跳过没有 URL 的 feed
+        }
+        store.put(feed);
+      });
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = () => reject(transaction.error);
+    }).then(() => renderFeeds());
+  }
+
+  // 渲染 feeds 列表
+  async function renderFeeds() {
+    const feeds = await getFeeds();
+    feedListContent.innerHTML = feeds.map(feed => `
+      <li data-url="${feed.url}">
+        <a href="#" class="feed-link">${feed.name}</a>
+      </li>
+    `).join('');
+  }
+
+  // 初始化
+  document.addEventListener('DOMContentLoaded', () => {
+    renderFeeds();
+    setupEventListeners();
+  });
+
+  function setupEventListeners() {
+    editFeedsBtn.addEventListener('click', async () => {
+      const feeds = await getFeeds();
+      feedsTextarea.value = feeds.map(feed => `${feed.name},${feed.url}`).join('\n');
+      editFeedsModal.style.display = 'block';
+    });
+
+    saveFeedsBtn.addEventListener('click', async () => {
+      const feedsText = feedsTextarea.value;
+      const feeds = feedsText.split('\n').map(line => {
+        const [name, url] = line.split(',');
+        return { name, url };
+      });
+      await saveFeeds(feeds);
+      editFeedsModal.style.display = 'none';
+    });
+
+    cancelEditBtn.addEventListener('click', () => {
+      editFeedsModal.style.display = 'none';
+    });
+
+    resizer.addEventListener('mousedown', (e) => {
+      isResizing = true;
+      document.addEventListener('mousemove', resize);
+      document.addEventListener('mouseup', stopResize);
+    });
+
+    function resize(e) {
+      if (isResizing) {
+        const newWidth = Math.max(16 * 16, Math.min(e.clientX, 30 * 16));
+        feedList.style.width = `${newWidth}px`;
+      }
+    }
+
+    function stopResize() {
+      isResizing = false;
+      document.removeEventListener('mousemove', resize);
+    }
+
+    feedListContent.addEventListener('click', (e) => {
+      if (e.target.classList.contains('feed-link')) {
+        e.preventDefault();
+        const li = e.target.closest('li');
+        if (li) {
+          const url = li.dataset.url;
+          fetchFeed(url);
+        }
+      }
+    });
+  }
+
+  async function fetchFeed(url) {
+    try {
+      const response = await fetch(url);
+      const text = await response.text();
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(text, "text/xml");
+      
+      let articles;
+      
+      if (xmlDoc.getElementsByTagName('rss').length > 0) {
+        articles = parseRSS(xmlDoc);
+      } else if (xmlDoc.getElementsByTagName('feed').length > 0) {
+        articles = parseAtom(xmlDoc);
+      } else {
+        throw new Error('不支持的feed格式');
+      }
+      
+      const event = new CustomEvent('updateArticles', { detail: articles });
+      document.dispatchEvent(event);
+    } catch (error) {
+      console.error('获取或解析feed时出错:', error);
+    }
+  }
+
+  function parseRSS(xmlDoc) {
+    const items = xmlDoc.getElementsByTagName('item');
+    return Array.from(items).map(item => ({
+      title: item.getElementsByTagName('title')[0]?.textContent || '无标题',
+      link: item.getElementsByTagName('link')[0]?.textContent || '#',
+      date: item.getElementsByTagName('pubDate')[0]?.textContent || '未知日期'
+    }));
+  }
+
+  function parseAtom(xmlDoc) {
+    const entries = xmlDoc.getElementsByTagName('entry');
+    return Array.from(entries).map(entry => ({
+      title: entry.getElementsByTagName('title')[0]?.textContent || '无标题',
+      link: entry.getElementsByTagName('link')[0]?.getAttribute('href') || '#',
+      date: entry.getElementsByTagName('published')[0]?.textContent || '未知日期'
+    }));
+  }
+
+  document.addEventListener('updateBackgroundColor', (event) => {
+    if (event instanceof CustomEvent) {
+      const bgColor = event.detail;
+      feedList.style.backgroundColor = bgColor;
+      const brightness = getBrightness(bgColor);
+      feedList.style.color = brightness > 128 ? '#000' : '#fff';
+    }
+  });
+
+  function getBrightness(color) {
+    const rgb = color.match(/\d+/g);
+    if (rgb) {
+      return (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+    }
+    return 0;
+  }
+</script>

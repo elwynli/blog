@@ -1,0 +1,168 @@
+---
+// 初始文章列表可以为空
+const initialArticles: Article[] = [];
+
+interface Article {
+  link: string;
+  title: string;
+  date: string;
+}
+
+---
+
+<div class="article-list" id="articleList">
+  <h2>文章列表</h2>
+  <ul id="articleListContent">
+    {initialArticles.map((article) => (
+      <li>
+        <a href="#" class="article-link" data-link={article.link}>{article.title}</a>
+        <span class="date">{new Date(article.date).toLocaleDateString()}</span>
+      </li>
+    ))}
+  </ul>
+  <div class="resizer" id="contentResizer"></div>
+</div>
+
+<style>
+  .article-list {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    width: 30rem;
+    min-width: 30rem;
+    max-width: 60rem;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    position: relative;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .article-link {
+    text-decoration: none;
+    color: inherit;
+    flex-grow: 1;
+    margin-right: 1rem;
+  }
+  .date {
+    color: #888;
+    font-size: 0.9em;
+    white-space: nowrap;
+  }
+  .resizer {
+    width: 5px;
+    height: 100%;
+    background-color: #ccc;
+    cursor: col-resize;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+</style>
+
+<script>
+  interface Article {
+    link: string;
+    title: string;
+    date: string;
+  }
+
+  interface UpdateArticlesEvent extends CustomEvent {
+    detail: Article[];
+  }
+
+  const articleListContent = document.getElementById('articleListContent');
+  const articleList = document.getElementById('articleList');
+  const resizer = document.getElementById('contentResizer');
+  let isResizing = false;
+
+  document.addEventListener('updateArticles', ((event: CustomEvent<Article[]>) => {
+    console.log('Received updateArticles event:', event.detail);
+    const articles = event.detail;
+    updateArticleListUI(articles);
+  }) as EventListener);
+
+  function updateArticleListUI(articles: Article[]) {
+    console.log('Updating article list UI with articles:', articles);
+    if (articleListContent) {
+      articleListContent.innerHTML = articles.map(article => `
+        <li>
+          <a href="#" class="article-link" data-link="${article.link}">${article.title}</a>
+          <span class="date">${new Date(article.date).toLocaleDateString()}</span>
+        </li>
+      `).join('');
+    }
+  }
+
+  articleListContent?.addEventListener('click', (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains('article-link')) {
+      e.preventDefault();
+      const link = target.dataset.link;
+      if (link) {
+        console.log('Article link clicked:', link);
+        fetchArticleContent(link);
+      }
+    }
+  });
+
+  async function fetchArticleContent(url: string) {
+    try {
+      console.log('Article URL:', url);
+      
+      // 直接发送事件以更新 ArticleViewer，不需要获取内容
+      const event = new CustomEvent('updateArticleContent', { detail: url });
+      document.dispatchEvent(event);
+    } catch (error) {
+      console.error('Error handling article link:', error);
+    }
+  }
+
+  document.addEventListener('updateBackgroundColor', ((event: CustomEvent<string>) => {
+    const bgColor = event.detail;
+    if (articleList) {
+      articleList.style.backgroundColor = bgColor;
+      // 可以根据背景颜色的亮度来调整文字颜色
+      const brightness = getBrightness(bgColor);
+      articleList.style.color = brightness > 128 ? '#000' : '#fff';
+    }
+  }) as EventListener);
+
+  function getBrightness(color: string): number {
+    // 简单的亮度计算，可以根据需要调整
+    const rgb = color.match(/\d+/g);
+    if (rgb) {
+      return (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+    }
+    return 0;
+  }
+
+  if (resizer) {
+    resizer.addEventListener('mousedown', (e) => {
+      isResizing = true;
+      document.addEventListener('mousemove', resize);
+      document.addEventListener('mouseup', stopResize);
+    });
+  }
+
+  function resize(e: MouseEvent) {
+    const articleList = document.querySelector('.article-list') as HTMLElement;
+    if (isResizing && articleList) {
+      const newWidth = Math.max(30 * 16, Math.min(e.clientX, 60 * 16));
+      articleList.style.width = `${newWidth}px`;
+    }
+  }
+
+  function stopResize() {
+    isResizing = false;
+    document.removeEventListener('mousemove', resize);
+  }
+</script>

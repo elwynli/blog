@@ -1,0 +1,56 @@
+---
+import FeedList from "../components/FeedList.astro";
+import ArticleList from "../components/ArticleList.astro";
+import ArticleViewer from "../components/ArticleViewer.astro";
+---
+
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fellow</title>
+  </head>
+  <body>
+    
+    <div class="container">
+      <FeedList />
+      <div class="content">
+        <ArticleList />
+        <ArticleViewer />
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    display: flex;
+    height: 100vh;
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+  .content > :first-child {
+    flex: 0 0 auto;
+  }
+  .content > :last-child {
+    flex: 1;
+    overflow-y: auto;
+    min-width: 0; /* 允许元素缩小到小于其内容大小 */
+  }
+  .resizer {
+    width: 5px;
+    background: #ccc;
+    cursor: col-resize;
+  }
+</style>
+
