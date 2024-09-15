@@ -54,7 +54,7 @@ const dialogues = props.dialogues as Dialogue[];
       {dialogue.alignment === 'left'? (
         <>
           <div class="avatar-container">
-            <img src={dialogue.avatar} title={dialogue.speaker} />
+            <img src={dialogue.avatar} alt={dialogue.speaker} />
           </div>
           <div class="text-container">
             <p>{dialogue.text}</p>

@@ -75,10 +75,6 @@ interface Article {
     date: string;
   }
 
-  interface UpdateArticlesEvent extends CustomEvent {
-    detail: Article[];
-  }
-
   const articleListContent = document.getElementById('articleListContent');
   const articleList = document.getElementById('articleList');
   const resizer = document.getElementById('contentResizer');
@@ -146,7 +142,7 @@ interface Article {
   }
 
   if (resizer) {
-    resizer.addEventListener('mousedown', (e) => {
+    resizer.addEventListener('mousedown', () => {
       isResizing = true;
       document.addEventListener('mousemove', resize);
       document.addEventListener('mouseup', stopResize);
