@@ -1,6 +1,6 @@
 [[feed]]
 name = "Kaffa"
-url = "http://kaffa.im/feed.xml"
+url = "https://kaffa.im/feed.xml"
 
 [[feed]]
 name = "奇客Solidot–传递最新科技情报"
@@ -8,7 +8,7 @@ url = "https://www.solidot.org/index.rss"
 
 [[feed]]
 name = "阮一峰的网络日志"
-url = "http://www.ruanyifeng.com/blog/atom.xml"
+url = "https://www.ruanyifeng.com/blog/atom.xml"
 
 [[feed]]
 name = "槿呈Goidea"
@@ -16,4 +16,4 @@ url = "https://justgoidea.com/rss.xml"
 
 [[feed]]
 name = "李昆"
-url = "http://likun.cc/rss.xml"
+url = "https://likun.cc/rss.xml"
