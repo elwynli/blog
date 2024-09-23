@@ -8,7 +8,7 @@ export async function GET() {
   const sortedPosts = getSortedPosts(posts);
   return rss({
     title: SITE.title,
-    description: SITE.desc,
+    description: SITE.desc + ' | feedId:55158936873381888+userId:60842160877454336',
     site: SITE.website,
     items: sortedPosts.map(({ data, slug }) => ({
       link: `posts/${slug}/`,
