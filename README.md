@@ -1,6 +1,10 @@
 # 🎏 Intro 介绍
 
-我的个人博客，偶在此写字。
+It's My Blog. 
+
+Time itself has a kind of beauty.
+
+个人博客，偶发随笔。
 
 而时间本身，有一种美。
 
