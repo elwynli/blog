@@ -14,7 +14,7 @@ Li Kun，大狸，从事 **软件开发、技术咨询**，如果您有任何与
 
 * 邮件：<span class="email"></span>
 * 电话：<span class="mobile"></span><span class="text-gray-400"></span>
-* 赞助：☕️ [Buy me coffee](https://buymeacoffee.com/ericlikun) ，干杯！❤️ 
+* 赞助：☕️ [Buy me a coffee](https://buymeacoffee.com/ericlikun) ，干杯！❤️ 
 
 <script is:inline>
 Array.prototype.slice.call(document.querySelectorAll('.email'), 0).forEach(el => {
